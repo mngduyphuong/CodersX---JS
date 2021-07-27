@@ -2,21 +2,19 @@
 // // Wait for user's response.
 // var userName = readlineSync.question('May I have your name? ');
 // console.log('Hi ' + userName + '!');
-
-var studentList = [];
-var student = {};
-var cont = true;
 var fs = require("fs");
 var readLineSync = require("readline-sync");
+var students = fs.readFileSync('data.json', {encoding:'utf8'});
+var studentList = JSON.parse(students);
+var student = {};
+var cont = true;
+
 
 while (cont) {
   var questions =
     "Your question: \n 1. Show all students \n 2. Create a new Student \n 3. Save & exit";
   console.log(questions);
   var answer = parseInt(readLineSync.question("Choose your question: "));
-  var students = fs.readFileSync('data.json', {encoding:'utf8'});
-  //studentList = JSON.parse(students);
-  console.log(studentList);
   switch (answer) {
     case 1:
       var read = fs.readFileSync("data.json", "utf-8");
@@ -25,8 +23,12 @@ while (cont) {
       break;
 
     case 2:
-      student.userName = readLineSync.question("Student name? ");
-      student.userAge = readLineSync.question("Student age? ");
+      var name = readLineSync.question("Student name? ");
+      var age = readLineSync.question("Student age? ");
+      var student ={
+          userName : name,
+          userAge : age
+      };
       studentList.push(student);
       break;
 
